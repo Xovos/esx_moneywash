@@ -11,9 +11,11 @@ AddEventHandler('esx_moneywash:withdraw', function(amount)
 	if amount == nil or amount <= 0 or amount > accountMoney then
 		TriggerClientEvent('esx:showNotification', _source, _U('invalid_amount'))
 	else
-		xPlayer.removeAccountMoney('black_money', amount)
-		xPlayer.addMoney(amount)
-		TriggerClientEvent('esx:showNotification', _source, _U('wash_money') .. amount .. '~s~.')
 		TriggerClientEvent('esx_moneywash:closeWASH', _source)
+		TriggerClientEvent('esx_moneywash:animation', _source)
+		Citizen.Wait(Config.WashTime * 60000)
+		TriggerClientEvent('esx:showNotification', _source, _U('wash_money') .. amount .. '~s~.')
+		xPlayer.removeAccountMoney('black_money', amount)
+	    xPlayer.addMoney(amount)
 	end
 end)
