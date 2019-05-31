@@ -21,6 +21,35 @@ AddEventHandler('esx_moneywash:closeWASH', function()
 	})
 end)
 
+RegisterNetEvent('esx_moneywash:animation')
+AddEventHandler('esx_moneywash:animation', function()
+	TriggerEvent("mythic_progressbar:client:progress", {
+		name = "WashingMoney",
+		duration = Config.WashTime * 60000,
+		label = "Washing Money In Progress",
+		useWhileDead = false,
+		canCancel = true,
+		controlDisables = {
+			disableMovement = true,
+			disableCarMovement = false,
+			disableMouse = false,
+			disableCombat = false,
+		},
+		animation = {
+			animDict = "amb@code_human_in_bus_passenger_idles@female@tablet@idle_a",
+			anim = "idle_a",
+			flags = 63
+	},
+	prop = {
+			model = "prop_cs_tablet",
+	}
+	}, function(status)
+		if not status then
+			
+		end
+	end)
+end)
+
 RegisterNUICallback('escape', function(data, cb)
   	TriggerEvent('esx_moneywash:closeWASH')
 	cb('ok')
@@ -111,7 +140,7 @@ Citizen.CreateThread(function()
 				})
 			end
 	    else
-		  	if IsControlJustReleased(0, 38) and isInWASHMarker then
+		  	if IsControlJustReleased(0, 26) and isInWASHMarker then
 		  		menuIsShowed = true
 				ESX.TriggerServerCallback('esx:getPlayerData', function(data)				    
 				    SendNUIMessage({
@@ -125,5 +154,29 @@ Citizen.CreateThread(function()
 				SetNuiFocus(true)
 			end
 	    end
+	end
+end)
+
+-- Disable Controls
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(1)
+		local playerPed = PlayerPedId(-1)
+
+		if hasAlreadyEnteredMarker then
+			DisableControlAction(0, 24, true) -- Attack
+			DisableControlAction(0, 257, true) -- Attack 2
+			DisableControlAction(0, 25, true) -- Aim
+			DisableControlAction(0, 263, true) -- Melee Attack 1
+			DisableControlAction(0, 47, true)  -- Disable weapon
+			DisableControlAction(0, 264, true) -- Disable melee
+			DisableControlAction(0, 257, true) -- Disable melee
+			DisableControlAction(0, 140, true) -- Disable melee
+			DisableControlAction(0, 141, true) -- Disable melee
+			DisableControlAction(0, 142, true) -- Disable melee
+			DisableControlAction(0, 143, true) -- Disable melee
+		else
+			Citizen.Wait(500)
+		end
 	end
 end)
