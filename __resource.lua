@@ -1,4 +1,4 @@
-version '0.0.1'
+version '1.0.0'
 
 server_scripts {
 
@@ -23,4 +23,9 @@ files {
 'html/img/cursor.png',
 'html/css/app.css',
 'html/scripts/app.js'
+}
+
+dependency {
+	'es_extended',
+	'mythic_progressbar'
 }

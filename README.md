@@ -13,3 +13,7 @@ git clone https://github.com/Xovos/esx_moneywash esx_moneywash
 ```
 start esx_moneywash
 ```
+
+# Requirements  
+* es_extended
+* mythic_progressbar https://github.com/XxFri3ndlyxX/mythic_progressbar/releases
